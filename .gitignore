@@ -93,3 +93,6 @@ ENV/
 
 # sqlite DB
 *.sqlite3
+
+# redis DB
+*.rdb
