@@ -25,7 +25,7 @@ SECRET_KEY = 'utd1w(@%@iyc(j5iqln&+1x76x2!f%^nke0y&4gy8ei(6w#(3v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 3rd party app
+    # 3rd party apps
     'channels',
+    # Custom apps
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'finchat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,9 +119,24 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+# Auth
+# When a user is logged-in is redirect to home, where if @login_required is satisfied
+# the user has acces to the homepage, ohter wise is redirected to
+# accounts/login/
+LOGIN_REDIRECT_URL = "/"
+# When a user is logout is redirected to home, home has the requirement @login_required
+# @login_required finds the user not logged-in so send the user to accounts/login/
+LOGOUT_REDIRECT_URL = "/"
 
 
 # Set REDIS as the channel storage.
