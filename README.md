@@ -22,8 +22,8 @@ running locally as well, for install redis on mac you can use brew:
     brew install redis
 
 And running redis locally on a diferent terminal with:
-	
-	redis-server
+    
+    redis-server
 
 By default redis run on port 6379, you can change this on the settings.py file
 
@@ -39,3 +39,14 @@ Finally migrate the proyects model and run the project locally with:
 
 >> How to use the finBot:
 
+
+FinChat Notes:
+==============
+
+I take a lot of ideas of how develope the chat from this 2 tutorials:
+    
+    >> https://gearheart.io/blog/creating-a-chat-with-django-channels
+    >> https://blog.heroku.comin_deep_with_django_channels_the_future_of_real_time_apps_in_django
+
+Never the less I develope my own code on top of this ideas, I reveal my open-sources to you, 
+considering its transparent and profesional tell you about it.
