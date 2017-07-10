@@ -25,7 +25,6 @@ $(function() {
     $("#chatform").on("submit", function(event) {
         event.preventDefault();
         var message = {
-            username: $('#username').val(),
             message: $('#message').val(),
         }
         webSocketBridge.send(message);

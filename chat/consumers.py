@@ -17,8 +17,10 @@ def ws_connect(message):
     message.reply_channel.send({'accept': True})
     Group('finchat',
           channel_layer=message.channel_layer).add(message.reply_channel)
+    message.channel_session['username'] = message.user.username
 
 
+@channel_session_user
 def ws_receive(message):
     try:
         data = json.loads(message['text'])
@@ -26,18 +28,15 @@ def ws_receive(message):
         log.debug("ws message isn't json")
         return
 
-    if set(data.keys()) != set(('username', 'message')):
+    if set(data.keys()) != set(('message',)):
         log.debug("ws message unexpected format data=%s", data)
         return
 
     if data:
-        log.debug('chat message username=%s message=%s',
-                  data['username'], data['message'])
-
-        user = User.objects.get(username=data['username'])
-        user_message = Message.objects.create(
-            user=user, message=data['message'])
-
+        user = User.objects.get(username=message.channel_session['username'])
+        user_message = Message.objects.create( user=user, 
+                                               message=data['message'])
+        
         Group('finchat',
               channel_layer=message.channel_layer).send({'text': json.dumps(user_message.as_dict())})
 
