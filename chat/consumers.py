@@ -6,6 +6,7 @@ from channels import Group
 from channels.auth import channel_session_user_from_http, channel_session_user
 from django.contrib.auth.models import User
 
+from finbot.utils import finbot
 from .models import Message
 
 
@@ -33,9 +34,21 @@ def ws_receive(message):
         return
 
     if data:
+        message_received = data['message']
+
+        # Could be better using a regex to identify all possibles commands
+        if message_received.startswith('/stock=') or message_received.startswith('/day_range='):
+            bot_message = finbot(message_received)
+            
+            Group('finchat',
+              channel_layer=message.channel_layer).send({'text': json.dumps(bot_message)})
+            
+            return
+
+
         user = User.objects.get(username=message.channel_session['username'])
         user_message = Message.objects.create( user=user, 
-                                               message=data['message'])
+                                               message=message_received)
         
         Group('finchat',
               channel_layer=message.channel_layer).send({'text': json.dumps(user_message.as_dict())})

@@ -6,7 +6,7 @@ from .models import Message
 
 @login_required
 def home(request):
-    messages = Message.objects.all()[:50]
+    messages = Message.objects.order_by('timestamp')[:50]
 
     context = {
         'username': request.user.username,
