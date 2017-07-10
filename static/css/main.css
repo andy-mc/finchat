@@ -128,8 +128,13 @@ p {
 #chats .username {
     display: inline-block;
     color: #C07A36;
-    width: 100px;
+    width: 75px;
     font-weight: bold;
+}
+
+#chats .msg-text {
+    display: inline-block;
+    width: 580px;
 }
 
 #chats .contextual-message {
