@@ -15,7 +15,7 @@ and them install the requirements with:
 
     pip install -r requirements.txt
 
-The project uses channel, for this reason you'll need Redis running locally,
+The project uses channels, for this reason you'll need Redis running locally,
 for install redis on mac you can use brew:
 
     brew install redis
@@ -41,20 +41,9 @@ Finally migrate the proyects models and run the project locally with:
 
     Simply send a chat message of the format /command=stock
     for example, /stock=AAPL and the bot will return the financial information:
+
         AAPL (Apple Inc.) quote is $144.18 per share
 
     The bot has 2 commands:
-     1) /stock=AAPL  -->  return the close price for a given stock.
-     2) /day_range=AAPL  -->  return the day high/low price for a given stock.  
-
-
-FinChat Notes:
-==============
-
-I take some ideas of how develope the chat from this 2 tutorials:
-    
-    >> https://gearheart.io/blog/creating-a-chat-with-django-channels
-    >> https://blog.heroku.comin_deep_with_django_channels_the_future_of_real_time_apps_in_django
-
-Never the less I develope my own code on top of this ideas, I reveal my open-sources to you, 
-considering its transparent and profesional tell you about it.
+        1) /stock=AAPL  -->  return the close price for a given stock.
+        2) /day_range=AAPL  -->  return the day high/low price for a given stock.

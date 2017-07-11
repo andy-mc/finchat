@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}FinChat - User Profile{% endblock %}
+
+{% block header_text %}<a class='home' href="{% url 'home' %}">FinChat</a>{% endblock %}
+
+{% block content %}
+  <div id="chats">
+    <div class="room">
+      <h3 id='profile-title'>Profile Page for {{request.user.username}}</h3>
+      <h4>Chat History</h4>
+      <div class="chat-history">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Message</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+              <tr>
+                <td>{{message.message}}</td>
+                <td>{{message.timestamp}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_body %}
+  <script src="{% static 'js/jquery-1.12.1.min.js' %}" type="text/javascript"></script>
+{% endblock %}

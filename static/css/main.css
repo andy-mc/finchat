@@ -64,16 +64,18 @@ header {
 }
 
 header h1 {
+    margin-left: 405px;
     width: 800px;
     margin: 0 auto;
     font-size: 40px;
 }
 
 header a {
-    position: absolute;
+    position: inherit;
     top: 10px;
-    right: 20px;
+    right: 2em;
     color: #fff;
+    margin-left: 29px;
 }
 
 /* Body */
@@ -158,7 +160,24 @@ p {
     font-style: italic;
 }
 
-#auth-bar a {
-    margin-right: 160px;
-    margin-top: 28px;
+#auth-bar {
+    position: inherit;
+    margin: -42px 0px 27px 899px;
+}
+
+#auth-bar #profile {
+    position: relative;
+}
+
+#auth-bar #logout {
+    position: relative;
+}
+
+#chats .chat-history {
+    background: #eee;
+    margin: 2px 0 5px 0;
+}
+
+#profile-title {
+    margin-bottom: 30px;
 }
