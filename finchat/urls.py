@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login, logout
 
-from chat.views import home, UserDetail
+from chat.views import SignUpView, UserDetail, home
 
 
 urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^accounts/login/$', login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/signup/$', SignUpView.as_view(), name="signup"),
     url(r'^users/(?P<pk>[-\w]+)/$', login_required(UserDetail.as_view()), name='user-detail'),
     url(r'^admin/', admin.site.urls),
 ]

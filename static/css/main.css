@@ -169,7 +169,17 @@ p {
     position: relative;
 }
 
+#auth-bar #login {
+    position: relative;
+    font-size: 21px;
+}
+
+
 #auth-bar #logout {
+    position: relative;
+}
+
+#auth-bar #signup {
     position: relative;
 }
 
