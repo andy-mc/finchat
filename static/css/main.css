@@ -121,7 +121,7 @@ p {
 }
 
 #chats .messages {
-    height: 200px;
+    height: 262px;
     overflow: auto;
     background: #eee;
     margin: 2px 0 5px 0;
@@ -180,4 +180,21 @@ p {
 
 #profile-title {
     margin-bottom: 30px;
+}
+
+.chat-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.chat-header .user {
+    margin-left: 2px;
+}
+
+.chat-header .message {
+    margin-left: 15px;
+}
+
+.chat-header .timestamp {
+    margin-left: 394px;
 }

@@ -10,13 +10,24 @@
     <div class="room" id="room">
       <h3>Connected as: {{username}}</h3>
       <div class="messages">
-        {% for message in messages %}
-          <div class='message'>
-            <span class='username'>{{message.user.username}}</span>
-            <span class='msg-text'>{{message.message}}</span>
-            <span class='timestamp'>{{message.formatted_timestamp}}</span>
-          </div>
-        {% endfor %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Message</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+              <tr>
+                <td class="username">{{message.user.username}}</td>
+                <td>{{message.message}}</td>
+                <td>{{message.timestamp}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
       <form id="chatform">
         <input id="message" type="text" placeholder="message">

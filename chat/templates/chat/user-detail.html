@@ -19,19 +19,21 @@
             </tr>
           </thead>
           <tbody>
-            {% for message in messages %}
+            {% if messages %}
+              {% for message in messages %}
+                <tr>
+                  <td>{{message.message}}</td>
+                  <td>{{message.timestamp}}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
               <tr>
-                <td>{{message.message}}</td>
-                <td>{{message.timestamp}}</td>
+                <td>Chat History Empty</td>
               </tr>
-            {% endfor %}
+            {% endif %}  
           </tbody>
         </table>
       </div>
     </div>
   </div>
-{% endblock %}
-
-{% block extra_body %}
-  <script src="{% static 'js/jquery-1.12.1.min.js' %}" type="text/javascript"></script>
 {% endblock %}

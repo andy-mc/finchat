@@ -5,21 +5,21 @@ $(function() {
     webSocketBridge.connect(ws_path);
 
     webSocketBridge.listen(function(message) {
-        var messagesDiv = $("#room .messages");
+        var tbody = $("tbody");
         
-        userMessage = $("<div class='message'></div>");
+        userMessage = $("<tr></tr>");
 
         userMessage.append(
-            $("<span class='username'></span>").text(message['username'])
+            $("<td class='username'></td>").text(message['username'])
         )
         userMessage.append(
-            $("<span class='msg-text'></span>").text(message['message'])
+            $("<td></td>").text(message['message'])
         )
         userMessage.append(
-            $("<span class='timestamp'></span>").text(message['timestamp'])
+            $("<td></td>").text(message['timestamp'])
         )
 
-        messagesDiv.append(userMessage);
+        tbody.append(userMessage);
     });
 
     $("#chatform").on("submit", function(event) {
