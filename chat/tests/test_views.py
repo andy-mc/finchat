@@ -1,6 +1,6 @@
 from chat.factories import MessageFactory, UserFactory
 from chat.models import Message
-from chat.views import UserDetail, home
+from chat.views import SignUpView, UserDetail, home
 from django.core.urlresolvers import resolve, reverse
 from django.test import TestCase
 
@@ -8,10 +8,15 @@ from django.test import TestCase
 class TestHome(TestCase):
 
     def setUp(self):
+        '''
+        Creates a user, check UserFactory to see the
+        default values.
+        '''
         self.user = UserFactory(username="user")
 
     def test_home_url(self):
         url = resolve('/')
+        # url.func is the view binded to url
         self.assertEqual(url.func, home)
 
     def test_authentication_control(self):
@@ -72,7 +77,7 @@ class TestUserDetail(TestCase):
     def test_user_detail_message_history(self):
         # Create 2 message for test
         MessageFactory.create_batch(2, user=self.user)
-        # Create 4 messages for random test users  
+        # Create 4 messages for random test users
         MessageFactory.create_batch(4)
 
         self.client.login(username="user", password="test")
@@ -82,9 +87,20 @@ class TestUserDetail(TestCase):
         response_messages = response.context['messages']
         db_messages = Message.objects.all()
         user_messages = db_messages.filter(user=self.user
-                                  ).order_by('-timestamp')
+                                           ).order_by('-timestamp')
 
         self.assertEqual(len(db_messages), 6)
         self.assertEqual(len(response_messages), 2)
         self.assertEqual(list(response_messages),
                          list(user_messages))
+
+
+class TestSignUpView(TestCase):
+
+    def test_signup_url(self):
+        url = resolve('/accounts/signup/')
+        self.assertEqual(url.func.__name__, SignUpView.__name__)
+
+    def test_signup_template(self):
+        response = self.client.get(reverse('signup'))
+        self.assertTemplateUsed(response, 'chat/signup.html')
