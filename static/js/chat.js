@@ -3,6 +3,7 @@ $(function() {
 
     var webSocketBridge = new channels.WebSocketBridge();
     webSocketBridge.connect(ws_path);
+    updateScroll()
 
     webSocketBridge.listen(function(message) {
         var tbody = $("tbody");
@@ -20,6 +21,7 @@ $(function() {
         )
 
         tbody.append(userMessage);
+        updateScroll()
     });
 
     $("#chatform").on("submit", function(event) {
@@ -28,6 +30,12 @@ $(function() {
             message: $('#message').val(),
         }
         webSocketBridge.send(message);
+        updateScroll()
         $("#message").val('').focus();
     });
 });
+
+function updateScroll() {
+    var messages = $(".messages");
+    messages.stop().animate({ scrollTop: messages[0].scrollHeight}, 1000);
+}
