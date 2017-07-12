@@ -13,7 +13,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
-    username = first_name
+    username = factory.Faker('user_name')
     password = make_password('test')
 
 

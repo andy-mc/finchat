@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserCreationForm(UserCreationForm):
-
     class Meta:
         model = get_user_model()
         fields = (

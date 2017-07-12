@@ -1,22 +1,23 @@
 from datetime import datetime
 from django.test import TestCase
-from chat.models import Message
 from chat.factories import MessageFactory, UserFactory
+from chat.models import Message
 
 
 class MessageTest(TestCase):
 
     def setUp(self):
-        self.user1 = UserFactory(username='user1')
+        self.user = UserFactory(username='user')
         self.time = datetime.now()
-        self.message = MessageFactory(
-            user=self.user1, message='hello world', timestamp=self.time)
+        self.message = MessageFactory(user=self.user, 
+                                      message='hello world', 
+                                      timestamp=self.time)
 
     def tearDown(self):
         self.message.delete()
 
     def test_string_method(self):
-        expected_str = 'user1: hello world  [{}]'.format(
+        expected_str = 'user: hello world  [{}]'.format(
             self.time.strftime('%b %-d %-I:%M %p'))
         self.assertEqual(expected_str, self.message.__str__())
 
@@ -26,7 +27,7 @@ class MessageTest(TestCase):
 
     # Test if the as_dict method return attributes as a dict
     def test_as_dict(self):
-        message_dict = {'username': 'user1', 'message': 'hello world',
+        message_dict = {'username': 'user', 'message': 'hello world',
                         'timestamp': self.time.strftime('%b %-d %-I:%M %p')}
 
         self.assertEqual(message_dict, self.message.as_dict())
