@@ -1,5 +1,4 @@
 # FinChat with Django
-========+++++++++++
 
 Simple chat with a bot integrated that makes queries to yahoo finance.
 
@@ -10,21 +9,23 @@ The authentication, signup, loging and logout are built on top of djangos auth-s
 
 # How to running locally:
 
-Create a virtual env for the project (you'll need python 3)
+Create a python 3 virtual env for the project
 and them install the requirements with:
 
     pip install -r requirements.txt
 
-The project uses channels, for this reason you'll need Redis running locally,
-for install redis on mac you can use brew:
+The project uses channels with RabbitMQ, for this reason you'll need RabbitMQ running locally,
+for install RabbitMQ on mac you can use brew:
 
-    brew install redis
+    brew install rabbitmq
 
-And running redis locally on a diferent terminal with:
+to install RabbitMQ on others OS please check, https://www.rabbitmq.com/download.html
+
+Run RabbitMQ locally on a second terminal with:
     
-    redis-server
+    rabbitmq-server
 
-By default redis run on port 6379, you can change this on the settings.py file
+for RabbitMQ customization Check CHANNEL_LAYERS config in settings.py.
 
 You can create a superuser acount for logging in and out with:
     
@@ -45,6 +46,7 @@ Finally migrate the proyects models and run the project locally with:
         AAPL (Apple Inc.) quote is $144.18 per share
 
     The bot has 2 commands:
+
         1) /stock=AAPL  -->  return the close price for a given stock.
         2) /day_range=AAPL  -->  return the day high/low price for a given stock.
 
@@ -54,4 +56,8 @@ Finally migrate the proyects models and run the project locally with:
     python manage.py test
 
 Fake data for testing purposes could be generated using UserFactory, MessageFactory 
-in chat.factories.py
+in chat.factories.py from the django shell.
+
+If python manage.py test through and error please try again, I been having problems
+trying too create unique usernames each time python manage.py test run, is not a 
+frequent error but could happen.
