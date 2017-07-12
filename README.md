@@ -52,3 +52,6 @@ Finally migrate the proyects models and run the project locally with:
 >> If you want to run the test suit, simply run:
 
     python manage.py test
+
+Fake data for testing purposes could be generated using UserFactory, MessageFactory 
+in chat.factories.py
