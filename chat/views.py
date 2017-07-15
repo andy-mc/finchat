@@ -1,23 +1,44 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.views.generic import CreateView, DetailView
+from django.shortcuts import redirect, render
+from django.views.generic import CreateView, DetailView, View
 
-from . import forms
+from .forms import RoomForm, UserCreationForm
+from .models import Message, Room
 from .models import Message, Room
 
 
-@login_required
-def home(request):
-    rooms = Room.objects.all()
+class HomeView(View):
+    """
+    A welcome page where the user can select a chat room
+    """
+    def get(self, request):
+        rooms = Room.objects.order_by('label')
 
-    context = {
-        'username': request.user.username,
-        'rooms': rooms
-    }
+        context = {
+            'username': request.user.username,
+            'rooms': rooms,
+            'form': RoomForm,
+        }
 
-    return render(request, "home.html", context)
+        return render(request, "home.html", context)
+
+    def post(self, request):
+        form = RoomForm(request.POST)
+        rooms = Room.objects.order_by('label')
+        
+        if form.is_valid():
+            form.save()
+            return redirect('chat_room', label=form.cleaned_data['label'])
+            
+        context = {
+            'username': request.user.username,
+            'rooms': rooms,
+            'form': form,
+        }
+        
+        return render(request, "home.html", context)
 
 
 @login_required
@@ -52,6 +73,6 @@ class UserDetail(DetailView):
 
 
 class SignUpView(CreateView):
-    form_class = forms.UserCreationForm
+    form_class = UserCreationForm
     success_url = settings.LOGIN_URL
     template_name = "chat/signup.html"

@@ -18,12 +18,12 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login, logout
 
-from chat.views import SignUpView, UserDetail, home, chat_room
+from chat.views import SignUpView, UserDetail, HomeView, chat_room
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home, name='home'),
+    url(r'^$', login_required(HomeView.as_view()), name='home'),
     url(r'^(?P<label>[\w-]{,50})/$', chat_room, name='chat_room'),
     url(r'^accounts/login/$', login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),

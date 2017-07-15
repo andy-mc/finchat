@@ -134,6 +134,15 @@ p {
     font-weight: bold;
 }
 
+#chats .room-label {
+    display: inline-block;
+    color: #4093FF;
+    width: 95px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
 #chats .msg-text {
     display: inline-block;
     width: 555px;
