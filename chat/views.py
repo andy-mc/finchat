@@ -13,6 +13,7 @@ class HomeView(View):
     """
     A welcome page where the user can select a chat room
     """
+
     def get(self, request):
         rooms = Room.objects.order_by('label')
 
@@ -27,23 +28,23 @@ class HomeView(View):
     def post(self, request):
         form = RoomForm(request.POST)
         rooms = Room.objects.order_by('label')
-        
+
         if form.is_valid():
             form.save()
             return redirect('chat_room', label=form.cleaned_data['label'])
-            
+
         context = {
             'username': request.user.username,
             'rooms': rooms,
             'form': form,
         }
-        
+
         return render(request, "home.html", context)
 
 
 @login_required
 def chat_room(request, label):
-    # If the room with the given label doesn't exist, 
+    # If the room with the given label doesn't exist,
     # automatically create a room.
     room, created = Room.objects.get_or_create(label=label)
 
@@ -65,10 +66,10 @@ class UserDetail(DetailView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['messages'] = Message.objects.filter(
-                                       user=self.request.user
-                                   ).order_by(
-                                       '-timestamp'
-                                   )
+            user=self.request.user
+        ).order_by(
+            '-timestamp'
+        )
         return context_data
 
 
