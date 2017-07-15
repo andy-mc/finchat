@@ -1,4 +1,5 @@
 import bs4 as bs
+import csv
 import urllib.request
 
 from datetime import datetime
