@@ -140,18 +140,16 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 
+# Set REDIS as the channel storage.
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
 # Channel layer definitions
 # http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
-rabbitmq_host = os.environ.get('RABBITMQ_HOST', 'localhost')
-rabbitmq_url = 'amqp://guest:guest@%s:5672/%%2F' % rabbitmq_host
-
 CHANNEL_LAYERS = {
     "default": {
-        # This app uses the Rabbitmq channel layer implementation
-        # asgi_rabbitmq
-        "BACKEND": "asgi_rabbitmq.RabbitmqChannelLayer",
+        "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "url": rabbitmq_url,
+            "hosts": [(redis_host, 6379)],
         },
         "ROUTING": "finchat.routing.channel_routing",
     },
