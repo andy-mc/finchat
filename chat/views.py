@@ -5,19 +5,36 @@ from django.shortcuts import render
 from django.views.generic import CreateView, DetailView
 
 from . import forms
-from .models import Message
+from .models import Message, Room
 
 
 @login_required
 def home(request):
-    messages = Message.objects.order_by('timestamp')[:50]
+    rooms = Room.objects.all()
 
     context = {
         'username': request.user.username,
+        'rooms': rooms
+    }
+
+    return render(request, "home.html", context)
+
+
+@login_required
+def chat_room(request, label):
+    # If the room with the given label doesn't exist, 
+    # automatically create a room.
+    room, created = Room.objects.get_or_create(label=label)
+
+    messages = room.messages.order_by('timestamp')[:50]
+
+    context = {
+        'username': request.user.username,
+        'room': room,
         'messages': messages,
     }
 
-    return render(request, "index.html", context)
+    return render(request, "chat/room.html", context)
 
 
 class UserDetail(DetailView):

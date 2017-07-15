@@ -1,5 +1,5 @@
 $(function() {
-    var ws_path = "/chat/stream/";
+    var ws_path = "/chat" + window.location.pathname;
 
     var webSocketBridge = new channels.WebSocketBridge();
     webSocketBridge.connect(ws_path);
