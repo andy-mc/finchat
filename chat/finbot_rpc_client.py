@@ -1,13 +1,14 @@
 #!/usr/bin/env python
+
 import pika
 import uuid
 
 
-class FibonacciRpcClient(object):
+class FinbotRpcClient(object):
 
     def __init__(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-            host='localhost'))
+                                                  host='localhost'))
 
         self.channel = self.connection.channel()
 
@@ -21,7 +22,7 @@ class FibonacciRpcClient(object):
         if self.corr_id == props.correlation_id:
             self.response = body
 
-    def call(self, n):
+    def call(self, message_received):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(exchange='',
@@ -30,7 +31,7 @@ class FibonacciRpcClient(object):
                                        reply_to=self.callback_queue,
                                        correlation_id=self.corr_id,
                                    ),
-                                   body=str(n))
+                                   body=message_received)
         while self.response is None:
             self.connection.process_data_events()
         return self.response

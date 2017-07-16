@@ -6,7 +6,7 @@ from channels import Group
 from channels.auth import channel_session_user_from_http, channel_session_user
 from django.contrib.auth.models import User
 
-from .finbot_rpc_client import FibonacciRpcClient
+from .finbot_rpc_client import FinbotRpcClient
 from .models import Message, Room
 
 
@@ -70,15 +70,14 @@ def ws_receive(message):
         # Could be better using a regex to identify all possibles commands
         if message_received.startswith('/stock=') or message_received.startswith('/day_range='):
 
-            fibonacci_rpc = FibonacciRpcClient()
-            print(" [x] Requesting fib(30)")
-            response = fibonacci_rpc.call(message_received)
-            print(" [.] Got %s" % response)
+            finbot_rpc_client = FinbotRpcClient()
+            print(" [x] Requesting finbot_rpc_client(%s)" % message_received)
+            # should I send the message using json.dumps()
+            response = finbot_rpc_client.call(message_received)
+            print(" [.] Finbot response %s" % response)
 
-            response = json.loads(response)
-            print('-|---', response, type(response))
             Group('chat-' + label,
-              channel_layer=message.channel_layer).send({'text': json.dumps(response)})
+                  channel_layer=message.channel_layer).send({'text': response.decode('utf-8')})
             return
 
         user = User.objects.get(username=message.channel_session['username'])
