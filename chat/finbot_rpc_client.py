@@ -30,6 +30,7 @@ class FinbotRpcClient(object):
                                    properties=pika.BasicProperties(
                                        reply_to=self.callback_queue,
                                        correlation_id=self.corr_id,
+                                       content_type='application/json',
                                    ),
                                    body=message_received)
         while self.response is None:

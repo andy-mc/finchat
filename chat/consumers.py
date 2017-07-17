@@ -71,10 +71,7 @@ def ws_receive(message):
         if message_received.startswith('/stock=') or message_received.startswith('/day_range='):
 
             finbot_rpc_client = FinbotRpcClient()
-            print(" [x] Requesting finbot_rpc_client(%s)" % message_received)
-            # should I send the message using json.dumps()
             response = finbot_rpc_client.call(message_received)
-            print(" [.] Finbot response %s" % response)
 
             Group('chat-' + label,
                   channel_layer=message.channel_layer).send({'text': response.decode('utf-8')})
